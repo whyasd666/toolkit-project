@@ -155,11 +155,6 @@ Edit the `knowledgeBase` array in `bot/bot.js`. Each entry has:
 - `keywords`: array of trigger words/phrases.
 - `answer`: the bot’s reply.
 
-### Styling
-
-Modify `public/style.css`. The CSS uses CSS variables for light/dark themes – you can easily change colours.
-
----
 
 ## Future improvements (Version 2)
 
@@ -170,11 +165,7 @@ Modify `public/style.css`. The CSS uses CSS variables for light/dark themes – 
 
 ---
 
-## License
 
-MIT
-
----
 
 ## Acknowledgements
 
@@ -183,4 +174,3 @@ MIT
 - [PostgreSQL](https://www.postgresql.org/) – relational database.
 
 For any questions, feel free to open an issue or contact the project maintainer.
-```
