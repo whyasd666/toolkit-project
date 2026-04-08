@@ -38,7 +38,6 @@ An educational website with cybersecurity lessons and an integrated Telegram bot
 cyber-learning-platform/
 ├── public/                 # Static frontend files
 │   ├── index.html          # Main website (lessons, auth, Telegram button)
-│   ├── style.css           # Styling (light/dark themes, responsive)
 │   └── script.js           # Client‑side logic (loads lessons via API)
 ├── bot/                    # Telegram bot
 │   └── bot.js              # Bot code (Telegraf, DB or JSON storage)
