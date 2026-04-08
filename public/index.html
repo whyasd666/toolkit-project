@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cyber Security Learning | InnoSecSchool</title>
+    <style>
+        /* ----- GLOBAL VARIABLES ----- */
+        :root {
+            --bg-gradient-start: #f6f9fc;
+            --bg-gradient-end: #eef2f5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: #dce5e8;
+            --text-primary: #1a2a3a;
+            --text-secondary: #2c4c5c;
+            --accent: #1e7b3e;
+            --accent-light: #3a9b5e;
+            --header-border: #c0d6c8;
+            --tab-active-bg: #e6f4ea;
+            --input-bg: #ffffff;
+            --input-border: #cbdde2;
+            --btn-gradient-start: #1e7b3e;
+            --btn-gradient-end: #156b34;
+            --error-bg: #ffefef;
+            --error-text: #c7372f;
+            --success-bg: #e0f2e9;
+            --success-text: #1e7b3e;
+            --user-greeting-bg: #e6f4ea;
+            --lesson-card-bg: #ffffff;
+            --lesson-card-shadow: 0 12px 28px -8px rgba(0, 32, 16, 0.08);
+            --footer-border: #cbdde2;
+            --footer-text: #5a7a6a;
+            --telegram-btn-bg: #0088cc;
+            --telegram-btn-hover: #006699;
+            --code-bg: #f0f4f8;
+            --code-color: #1e4660;
+        }
+        body.dark {
+            --bg-gradient-start: #0e1a1a;
+            --bg-gradient-end: #0b1414;
+            --card-bg: rgba(18, 28, 28, 0.95);
+            --card-border: #2c4646;
+            --text-primary: #e3f0ec;
+            --text-secondary: #b8d9ce;
+            --accent: #4cae6f;
+            --accent-light: #6bc48a;
+            --header-border: #2c5e4a;
+            --tab-active-bg: #1e3a2a;
+            --input-bg: #1a2a2a;
+            --input-border: #2c5e4a;
+            --btn-gradient-start: #2c7a4a;
+            --btn-gradient-end: #1e5e3a;
+            --error-bg: #2e1c1c;
+            --error-text: #f0a0a0;
+            --success-bg: #1e3a2a;
+            --success-text: #9bdfb5;
+            --user-greeting-bg: #1e3a2a;
+            --lesson-card-bg: #1a2a2a;
+            --lesson-card-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.4);
+            --footer-border: #2c5e4a;
+            --footer-text: #8fc0b0;
+            --telegram-btn-bg: #2c7a4a;
+            --telegram-btn-hover: #1e5e3a;
+            --code-bg: #1e2c2c;
+            --code-color: #cce5e0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        body {
+            background: linear-gradient(145deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--header-border);
+        }
+        .logo-area h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo-area p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(2px);
+            border-radius: 1.8rem;
+            border: 1px solid var(--card-border);
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+        }
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid var(--card-border);
+            margin-bottom: 1.5rem;
+        }
+        .auth-tab {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .auth-tab.active {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .auth-form input {
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            padding: 0.8rem 1.2rem;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+        .auth-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(30, 123, 62, 0.2);
+        }
+        .btn {
+            background: linear-gradient(95deg, var(--btn-gradient-start), var(--btn-gradient-end));
+            border: none;
+            padding: 0.8rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        .error-msg, .success-msg {
+            padding: 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .error-msg { background: var(--error-bg); color: var(--error-text); }
+        .success-msg { background: var(--success-bg); color: var(--success-text); }
+        .hidden { display: none; }
+        .user-greeting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: var(--user-greeting-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .greeting-text { font-weight: 600; color: var(--accent); }
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+        }
+        .logout-btn:hover { background: var(--accent); color: white; }
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin: 1.5rem 0;
+        }
+        .lesson-card {
+            background: var(--lesson-card-bg);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border-left: 6px solid var(--accent);
+            box-shadow: var(--lesson-card-shadow);
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .lesson-card:hover { transform: translateY(-4px); }
+        .lesson-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--accent-light); }
+        .lesson-card p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .lesson-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        
+        /* LESSON DETAIL STYLES */
+        .lesson-detail {
+            background: var(--card-bg);
+            border-radius: 1.8rem;
+            padding: 2rem;
+            border: 1px solid var(--card-border);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        .lesson-detail h2 {
+            font-size: 1.8rem;
+            color: var(--accent-light);
+            margin: 1rem 0 0.5rem;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 0.3rem;
+        }
+        .lesson-detail h3 {
+            font-size: 1.4rem;
+            margin: 1.2rem 0 0.5rem;
+            color: var(--accent);
+        }
+        .lesson-detail p {
+            margin: 0.8rem 0;
+        }
+        .lesson-detail pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            color: var(--code-color);
+        }
+        .lesson-detail code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+        }
+        .lesson-detail ul, .lesson-detail ol {
+            margin: 0.5rem 0 1rem 1.8rem;
+        }
+        .lesson-detail li {
+            margin: 0.3rem 0;
+        }
+        .lesson-detail table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .lesson-detail th, .lesson-detail td {
+            border: 1px solid var(--card-border);
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .lesson-detail th {
+            background: var(--tab-active-bg);
+            font-weight: bold;
+        }
+        .lesson-detail hr {
+            margin: 1.5rem 0;
+            border-color: var(--card-border);
+        }
+        .back-button {
+            background: var(--tab-active-bg);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .telegram-block {
+            background: var(--user-greeting-bg);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 0;
+        }
+        .telegram-btn {
+            display: inline-block;
+            background: var(--telegram-btn-bg);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .telegram-btn:hover { background: var(--telegram-btn-hover); }
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--footer-text);
+            border-top: 1px solid var(--footer-border);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 680px) {
+            body { padding: 0.8rem; }
+            .lesson-detail { padding: 1rem; }
+            .lesson-detail table { white-space: normal; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <h1>Cyber Security Learning</h1>
+            <p>Master cybersecurity with in-depth lessons</p>
+        </div>
+        <button id="darkModeToggle" class="theme-toggle">🌓 Dark/Light</button>
+    </header>
+
+    <div id="authContainer" class="card">
+        <div class="auth-tabs">
+            <button id="loginTab" class="auth-tab active">Login</button>
+            <button id="registerTab" class="auth-tab">Register</button>
+        </div>
+        <div id="loginForm" class="auth-form">
+            <input type="email" id="loginEmail" placeholder="Email address">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button id="doLogin" class="btn">Sign in</button>
+            <div id="loginError" class="error-msg hidden"></div>
+        </div>
+        <div id="registerForm" class="auth-form hidden">
+            <input type="email" id="regEmail" placeholder="Email address">
+            <input type="password" id="regPassword" placeholder="Password (min 4 chars)">
+            <button id="doRegister" class="btn">Create account</button>
+            <div id="regError" class="error-msg hidden"></div>
+            <div id="regSuccess" class="success-msg hidden"></div>
+        </div>
+    </div>
+
+    <div id="lessonsContainer" class="hidden">
+        <div class="user-greeting">
+            <span class="greeting-text">Welcome, <span id="currentUserEmail"></span>!</span>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+        <div id="dynamicContent"></div>
+    </div>
+
+    <div class="telegram-block">
+        <h3>Need help?</h3>
+        <p>Ask our Telegram bot about SQL injection, XSS, phishing, passwords, or Wi-Fi security.</p>
+        <a href="https://t.me/CyberSecLearning_bot" target="_blank" class="telegram-btn">Chat with Bot</a>
+        <p class="small">The bot answers automatically and saves your questions.</p>
+    </div>
+
+    <div class="footer">
+        © 2025 Cyber Security Learning — All data stored locally.
+    </div>
+</div>
+
+<script>
+    // -------------------- LESSONS DATA (with proper formatting) --------------------
+    const LESSONS = [
+        {
+            slug: "sql-injection",
+            title: "SQL Injection",
+            short_desc: "What is SQLi and how to prevent it",
+            full_content: `## SQL Injection: The Most Critical Web Vulnerability
+
+SQL Injection (SQLi) is a code injection technique that exploits vulnerabilities in an application's database layer. It remains one of the OWASP Top 10 most critical web application security risks.
+
+### How SQL Injection Works
+
+Attackers insert malicious SQL code into input fields (e.g., login forms, search boxes, URL parameters). If the application fails to sanitize user input, the injected code is executed by the database.
+
+#### Classic Example
+
+Consider a login query:
+
+SELECT * FROM users WHERE username = '$username' AND password = '$password'
+
+If an attacker enters \`admin' --\` as username and anything as password, the query becomes:
+
+SELECT * FROM users WHERE username = 'admin' --' AND password = 'anything'
+
+The \`--\` comments out the rest, bypassing password verification.
+
+### Types of SQL Injection
+
+| Type | Description | Impact |
+|------|-------------|--------|
+| In-band SQLi | Same channel used to inject and retrieve data (error-based, union-based) | Direct data theft |
+| Blind SQLi | No visible error messages; infer data by boolean or time delays | Slow but stealthy |
+| Out-of-band SQLi | Uses different channels (DNS, HTTP) to exfiltrate data | Advanced, less common |
+
+### Real-World Impact
+
+- Data theft: credit cards, passwords, personal data
+- Authentication bypass: access admin accounts
+- Remote code execution (in some DB configurations)
+- Database denial of service
+
+### Prevention (Defensive Measures)
+
+1. **Parameterized Queries (Prepared Statements)** – the only reliable defense.
+   Example in Python:
+   \`\`\`
+   cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
+   \`\`\`
+
+2. **Stored Procedures** – use with parameterized calls.
+
+3. **Input Validation** – whitelist allowed characters.
+
+4. **Least Privilege** – database accounts should have minimal permissions.
+
+5. **Escaping Special Characters** – only as a last resort.
+
+### Tools for Testing
+
+- SQLmap – automated SQL injection detection
+- Burp Suite – manual testing
+- OWASP ZAP – open-source scanner
+
+### Practice Lab
+
+Try safe exercises on PortSwigger Web Security Academy or HackTheBox.`
+        },
+        {
+            slug: "xss",
+            title: "Cross-Site Scripting (XSS)",
+            short_desc: "Understanding XSS attacks",
+            full_content: `## Cross-Site Scripting (XSS): Client-Side Code Injection
+
+XSS allows attackers to inject malicious scripts into web pages viewed by other users. It's the most prevalent web vulnerability.
+
+### Types of XSS
+
+| Type | Description | Impact |
+|------|-------------|--------|
+| Reflected | Malicious script is immediately returned in server response | Non-persistent, requires social engineering |
+| Stored | Malicious script permanently stored on server (e.g., in comment, profile) | Highly dangerous, affects every visitor |
+| DOM-based | Vulnerability in client-side JavaScript, no server involvement | Difficult to detect, client-only |
+
+### Consequences of XSS
+
+- Session hijacking (steal cookies)
+- Keylogging
+- Defacement
+- Redirection to malicious sites
+- CSRF bypass
+- Stealing saved passwords
+
+### Real-World Examples
+
+- **MySpace Samy worm (2005)** – infected over 1 million users in 20 hours.
+- **Twitter XSS (2010)** – caused pop-ups and retweets.
+
+### Prevention Techniques
+
+#### 1. Output Encoding
+Always encode data based on context (HTML, attribute, JavaScript, CSS). Use libraries like OWASP Java Encoder or \`htmlspecialchars\` in PHP.
+
+#### 2. Content Security Policy (CSP)
+Restrict sources of executable scripts. Example header:
+\`\`\`
+Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted.cdn.com
+\`\`\`
+
+#### 3. Use Secure Frameworks
+React, Angular, Vue automatically escape variables (but be careful with \`dangerouslySetInnerHTML\`).
+
+#### 4. HTTP-only Cookies
+Prevent JavaScript access to session cookies: \`Set-Cookie: sessionId=abc123; HttpOnly\`
+
+#### 5. Input Validation
+Reject or sanitize inputs that contain HTML tags or JavaScript events.
+
+### Testing Tools
+
+- XSStrike – advanced XSS scanner
+- Burp Suite – with XSS validator
+- DOM Invader – built into Burp
+
+### Secure Coding Checklist
+
+- All user-controlled data is escaped before output.
+- CSP header is configured.
+- Cookies have HttpOnly and Secure flags.
+- No use of \`eval()\`, \`innerHTML\`, \`document.write\` with untrusted data.`
+        },
+        {
+            slug: "phishing",
+            title: "Phishing",
+            short_desc: "How to recognize phishing attacks",
+            full_content: `## Phishing: The Human Element of Cyber Attacks
+
+Phishing accounts for over 80% of reported security incidents.
+
+### Common Phishing Techniques
+
+| Technique | Description | Example |
+|-----------|-------------|---------|
+| Email phishing | Mass emails impersonating banks | "Verify your account now" |
+| Spear phishing | Targeted attack using personal info | Email from "CEO" to finance |
+| Whaling | Targeting high-profile executives | Fake legal subpoena |
+| Smishing | SMS text messages | "Your package is delayed" |
+| Vishing | Voice calls (phone) | Fake tech support |
+
+### Red Flags – How to Spot Phishing
+
+1. Urgency or threat – "Immediate action required"
+2. Generic greeting – "Dear customer"
+3. Suspicious sender address – \`support@paypa1.com\`
+4. Poor grammar/spelling
+5. Mismatched URLs – hover to see real link
+6. Requests for personal data
+7. Unexpected attachments
+
+### Protection Measures
+
+#### For Individuals
+- Enable Two-Factor Authentication (2FA) everywhere
+- Use a password manager – won't auto-fill on fake domains
+- Verify requests through another channel
+- Never click links in unexpected emails – type URL manually
+
+#### For Organizations
+- Security awareness training with simulated phishing
+- Email filtering (DMARC, SPF, DKIM)
+- URL filtering
+- Reporting button for suspicious emails
+
+### What to Do If You Fall Victim
+
+1. Change compromised passwords immediately
+2. Contact the impersonated company (bank, email provider)
+3. Enable fraud alerts on financial accounts
+4. Run antivirus scan
+5. Report the phishing attempt to report@phishing.gov.uk
+
+### Test Your Awareness
+
+Try Google's Phishing Quiz – it's free and eye-opening.`
+        },
+        {
+            slug: "password-security",
+            title: "Password Security",
+            short_desc: "Best practices for strong passwords",
+            full_content: `## Password Security: Your First Line of Defense
+
+Weak passwords are responsible for over 60% of data breaches.
+
+### Characteristics of a Strong Password
+
+| Weak | Strong |
+|------|--------|
+| \`password123\` | \`C0rrect-Horse-Battery-Staple\` |
+| \`qwerty\` | \`9!qZ$mP2&xL@\` |
+| \`admin\` | \`PurpleTurtle$RunsFast87\` |
+
+**Modern guidelines (NIST SP 800-63B):**
+- Minimum 12 characters (longer is better)
+- No complexity requirements (uppercase, numbers, symbols are optional but helpful)
+- No common dictionary words or sequences
+- Check against breach databases (HaveIBeenPwned)
+
+### Password Managers
+
+Popular options: Bitwarden (open-source), 1Password, KeePass, Dashlane.
+
+Benefits: you remember only one master password, each site gets a unique complex password.
+
+### Two-Factor Authentication (2FA)
+
+Types from weakest to strongest:
+1. SMS codes – vulnerable to SIM swapping
+2. TOTP (Google Authenticator, Authy)
+3. Push notifications (Duo, Microsoft Authenticator)
+4. WebAuthn / Security keys (YubiKey) – phishing-resistant
+
+### Breach Response
+
+1. Check https://haveibeenpwned.com with your email
+2. Change passwords for affected sites
+3. Enable 2FA where available
+4. Use a password manager to rotate credentials
+
+### Myths vs. Facts
+
+| Myth | Fact |
+|------|------|
+| "Change password every 30 days" | Leads to weaker passwords; change only when compromised. |
+| "Complexity is enough" | Length matters more (12+ characters). |
+| "2FA is inconvenient" | Adds seconds and blocks 99.9% of automated attacks. |
+
+### Practice: Create a Strong Passphrase
+
+Use the Diceware method: roll dice to pick random words. Example: \`thunder-puzzle-velvet-saucer\`. Long, memorable, and strong.`
+        },
+        {
+            slug: "wifi-security",
+            title: "Wi-Fi Security",
+            short_desc: "Secure your wireless network",
+            full_content: `## Wi-Fi Security: Protecting Your Wireless World
+
+Wireless networks are inherently less secure than wired. Attackers can intercept traffic from hundreds of meters away.
+
+### How Wi-Fi Attacks Work
+
+| Attack | Description | Mitigation |
+|--------|-------------|-------------|
+| Evil Twin | Fake access point with same SSID | Verify SSID with staff, use VPN |
+| KRACK | Exploits WPA2 vulnerability | Keep devices updated |
+| Packet Sniffing | Capturing unencrypted traffic | Use HTTPS, VPN |
+| MITM | Attacker positions between you and router | VPN, certificate validation |
+
+### Home Network Security Checklist
+
+- Change default admin password
+- Disable WPS (Wi-Fi Protected Setup)
+- Enable WPA3 if available; otherwise WPA2 (AES)
+- Update router firmware regularly
+- Disable remote management
+- Change default SSID
+- Enable guest network for IoT devices
+
+### Public Wi-Fi Risks and Solutions
+
+**Best Practices:**
+- Use a VPN (essential)
+- Enable HTTPS-Only Mode in browser
+- Turn off auto-connect to open networks
+- Forget network after use
+- Disable file sharing and AirDrop
+- Use your phone's hotspot instead of public Wi-Fi when possible
+
+### VPN Explained
+
+A VPN encrypts all traffic from your device to the VPN server.
+
+**When to use VPN:** on public Wi-Fi, to bypass censorship, to hide browsing from ISP.
+
+**What VPN doesn't protect against:** malware, phishing, logins to non-HTTPS sites.
+
+### Quick Checklist for Travelers
+
+1. Install a reputable VPN before traveling
+2. Update all software
+3. Enable 2FA on important accounts
+4. Consider a travel router with built-in VPN
+5. Avoid sensitive transactions on public networks – use cellular data
+
+### Resources
+
+- Wi-Fi Security Scanner: Wifite, Aircrack-ng
+- VPN comparison: thatoneprivacysite.net`
+        }
+    ];
+
+    // ---------- AUTH (localStorage) ----------
+    const USERS_KEY = "cyber_users";
+    const SESSION_KEY = "cyber_user";
+
+    function getUsers() { return JSON.parse(localStorage.getItem(USERS_KEY) || "[]"); }
+    function saveUsers(users) { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+    function setCurrentUser(email) { email ? sessionStorage.setItem(SESSION_KEY, email) : sessionStorage.removeItem(SESSION_KEY); }
+    function getCurrentUser() { return sessionStorage.getItem(SESSION_KEY); }
+    function isValidEmail(e) { return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(e); }
+
+    function register(email, pwd) {
+        if (!email || !pwd) return { ok: false, msg: "Fill both fields." };
+        if (!isValidEmail(email)) return { ok: false, msg: "Invalid email format." };
+        if (pwd.length < 4) return { ok: false, msg: "Password min 4 characters." };
+        const users = getUsers();
+        if (users.some(u => u.email === email)) return { ok: false, msg: "User already exists." };
+        users.push({ email, password: pwd });
+        saveUsers(users);
+        return { ok: true, msg: "Account created!" };
+    }
+    function login(email, pwd) {
+        const users = getUsers();
+        const user = users.find(u => u.email === email && u.password === pwd);
+        return user ? { ok: true } : { ok: false, msg: "Invalid email or password." };
+    }
+
+    // Helper to convert markdown-like formatting to HTML
+    function formatContent(text) {
+        // Escape HTML special characters first (except for our tags)
+        let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        // Headers
+        html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>');
+        html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+        // Bold and italic
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        // Code blocks
+        html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // Tables: simple markdown tables (| Header | Header |)
+        const tableRegex = /\n(\|.+\|)\n(\|[-: |]+\|)\n((\|.+\|\n)+)/g;
+        html = html.replace(tableRegex, (match, headerRow, alignRow, bodyRows) => {
+            const headers = headerRow.split('|').filter(cell => cell.trim() !== '').map(cell => `<th>${cell.trim()}</th>`);
+            const rows = bodyRows.trim().split('\n').map(row => {
+                const cells = row.split('|').filter(cell => cell.trim() !== '').map(cell => `<td>${cell.trim()}</td>`);
+                return `<tr>${cells.join('')}</tr>`;
+            });
+            return `<table><thead><tr>${headers.join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`;
+        });
+        // Unordered lists (lines starting with - or *)
+        html = html.replace(/^[\-\*] (.*?)$/gm, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+        // Paragraphs: convert double newlines to paragraphs
+        html = html.replace(/\n\n/g, '</p><p>');
+        html = '<p>' + html + '</p>';
+        // Cleanup empty paragraphs and fix nested
+        html = html.replace(/<p><\/p>/g, '');
+        html = html.replace(/<p><h2/g, '<h2');
+        html = html.replace(/<\/h2><\/p>/g, '</h2>');
+        html = html.replace(/<p><h3/g, '<h3');
+        html = html.replace(/<\/h3><\/p>/g, '</h3>');
+        html = html.replace(/<p><ul>/g, '<ul>');
+        html = html.replace(/<\/ul><\/p>/g, '</ul>');
+        html = html.replace(/<p><table/g, '<table');
+        html = html.replace(/<\/table><\/p>/g, '</table>');
+        return html;
+    }
+
+    // ---------- UI RENDERING ----------
+    function renderLessonsList() {
+        const container = document.getElementById("dynamicContent");
+        if (!container) return;
+        let html = `<h2>Lessons</h2><div class="lessons-grid">`;
+        LESSONS.forEach(lesson => {
+            html += `
+                <div class="lesson-card" data-slug="${lesson.slug}">
+                    <h3>${lesson.title}</h3>
+                    <p>${lesson.short_desc}</p>
+                    <a href="#" class="lesson-link">Read more →</a>
+                    <br><small>Ask bot: <a href="https://t.me/CyberSecLearning_bot?start=question_${lesson.slug}" target="_blank">Question about ${lesson.title}</a></small>
+                </div>
+            `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+        document.querySelectorAll('.lesson-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = link.closest('.lesson-card');
+                const slug = card.dataset.slug;
+                navigateToLesson(slug);
+            });
+        });
+    }
+
+    function renderLessonDetail(slug) {
+        const lesson = LESSONS.find(l => l.slug === slug);
+        if (!lesson) { renderLessonsList(); return; }
+        const container = document.getElementById("dynamicContent");
+        const formattedContent = formatContent(lesson.full_content);
+        container.innerHTML = `
+            <div class="lesson-detail">
+                <button id="backBtn" class="back-button">← Back to all lessons</button>
+                ${formattedContent}
+                <hr>
+                <p><strong>Need help?</strong> <a href="https://t.me/CyberSecLearning_bot?start=question_${slug}" target="_blank">Ask our Telegram bot about ${lesson.title}</a></p>
+            </div>
+        `;
+        document.getElementById("backBtn").addEventListener("click", () => {
+            history.pushState(null, '', '/');
+            renderLessonsList();
+        });
+    }
+
+    function navigateToLesson(slug) {
+        history.pushState({ lesson: slug }, '', `/lesson/${slug}`);
+        renderLessonDetail(slug);
+    }
+
+    window.addEventListener('popstate', () => {
+        const path = location.pathname;
+        if (path.startsWith('/lesson/')) {
+            const slug = path.split('/')[2];
+            if (slug && LESSONS.find(l => l.slug === slug)) renderLessonDetail(slug);
+            else renderLessonsList();
+        } else {
+            renderLessonsList();
+        }
+    });
+
+    // ---------- AUTH UI ----------
+    let activeTab = "login";
+    function switchTab(tab) {
+        const loginForm = document.getElementById("loginForm");
+        const regForm = document.getElementById("registerForm");
+        const loginTabBtn = document.getElementById("loginTab");
+        const regTabBtn = document.getElementById("registerTab");
+        if (tab === "login") {
+            loginForm.classList.remove("hidden");
+            regForm.classList.add("hidden");
+            loginTabBtn.classList.add("active");
+            regTabBtn.classList.remove("active");
+        } else {
+            loginForm.classList.add("hidden");
+            regForm.classList.remove("hidden");
+            regTabBtn.classList.add("active");
+            loginTabBtn.classList.remove("active");
+        }
+        clearAuthMessages();
+    }
+    function clearAuthMessages() {
+        document.getElementById("loginError").classList.add("hidden");
+        document.getElementById("regError").classList.add("hidden");
+        document.getElementById("regSuccess").classList.add("hidden");
+    }
+    function showLoginError(msg) { let e = document.getElementById("loginError"); e.innerText = msg; e.classList.remove("hidden"); }
+    function showRegError(msg) { let e = document.getElementById("regError"); e.innerText = msg; e.classList.remove("hidden"); document.getElementById("regSuccess").classList.add("hidden"); }
+    function showRegSuccess(msg) { let s = document.getElementById("regSuccess"); s.innerText = msg; s.classList.remove("hidden"); document.getElementById("regError").classList.add("hidden"); }
+
+    function handleLogin() {
+        const email = document.getElementById("loginEmail").value.trim();
+        const pwd = document.getElementById("loginPassword").value;
+        const res = login(email, pwd);
+        if (res.ok) {
+            setCurrentUser(email);
+            updateAuthUI();
+        } else showLoginError(res.msg);
+    }
+    function handleRegister() {
+        const email = document.getElementById("regEmail").value.trim();
+        const pwd = document.getElementById("regPassword").value;
+        const res = register(email, pwd);
+        if (res.ok) {
+            showRegSuccess(res.msg);
+            const auto = login(email, pwd);
+            if (auto.ok) {
+                setCurrentUser(email);
+                updateAuthUI();
+                document.getElementById("regEmail").value = "";
+                document.getElementById("regPassword").value = "";
+            } else { switchTab("login"); showLoginError("Account created! Please log in."); }
+        } else showRegError(res.msg);
+    }
+    function handleLogout() {
+        setCurrentUser(null);
+        updateAuthUI();
+        document.getElementById("loginEmail").value = "";
+        document.getElementById("loginPassword").value = "";
+        document.getElementById("regEmail").value = "";
+        document.getElementById("regPassword").value = "";
+        switchTab("login");
+    }
+    function updateAuthUI() {
+        const user = getCurrentUser();
+        const authDiv = document.getElementById("authContainer");
+        const lessonsDiv = document.getElementById("lessonsContainer");
+        if (user) {
+            authDiv.classList.add("hidden");
+            lessonsDiv.classList.remove("hidden");
+            document.getElementById("currentUserEmail").innerText = user;
+            const path = location.pathname;
+            if (path === '/' || path === '') renderLessonsList();
+            else if (path.startsWith('/lesson/')) {
+                const slug = path.split('/')[2];
+                if (slug && LESSONS.find(l => l.slug === slug)) renderLessonDetail(slug);
+                else renderLessonsList();
+            } else renderLessonsList();
+        } else {
+            authDiv.classList.remove("hidden");
+            lessonsDiv.classList.add("hidden");
+        }
+    }
+
+    // ---------- DARK MODE ----------
+    function initTheme() {
+        const saved = localStorage.getItem("theme");
+        if (saved === "dark") document.body.classList.add("dark");
+        else document.body.classList.remove("dark");
+        const toggle = document.getElementById("darkModeToggle");
+        if (toggle) toggle.innerText = document.body.classList.contains("dark") ? "☀️ Light" : "🌙 Dark";
+    }
+    function toggleTheme() {
+        document.body.classList.toggle("dark");
+        const isDark = document.body.classList.contains("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        const toggle = document.getElementById("darkModeToggle");
+        if (toggle) toggle.innerText = isDark ? "☀️ Light" : "🌙 Dark";
+    }
+
+    function ensureDemoUser() {
+        const users = getUsers();
+        if (users.length === 0) {
+            users.push({ email: "demo@cyber.com", password: "demo123" });
+            saveUsers(users);
+        }
+    }
+
+    function init() {
+        ensureDemoUser();
+        initTheme();
+        updateAuthUI();
+        document.getElementById("loginTab").addEventListener("click", () => switchTab("login"));
+        document.getElementById("registerTab").addEventListener("click", () => switchTab("register"));
+        document.getElementById("doLogin").addEventListener("click", handleLogin);
+        document.getElementById("doRegister").addEventListener("click", handleRegister);
+        document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+        document.getElementById("darkModeToggle").addEventListener("click", toggleTheme);
+        document.getElementById("loginEmail").addEventListener("keypress", e => e.key === "Enter" && handleLogin());
+        document.getElementById("loginPassword").addEventListener("keypress", e => e.key === "Enter" && handleLogin());
+        document.getElementById("regEmail").addEventListener("keypress", e => e.key === "Enter" && handleRegister());
+        document.getElementById("regPassword").addEventListener("keypress", e => e.key === "Enter" && handleRegister());
+    }
+    document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
