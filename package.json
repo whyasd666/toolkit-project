@@ -1,0 +1,25 @@
+{
+  "name": "cyber-learning-platform",
+  "version": "1.0.0",
+  "description": "Cybersecurity learning platform with Telegram bot",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "bot": "node bot/bot.js",
+    "dev": "concurrently \"nodemon server.js\" \"nodemon bot/bot.js\""
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "pg": "^8.20.0",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "nodemon": "^3.1.14"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
