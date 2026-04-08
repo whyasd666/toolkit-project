@@ -61,7 +61,7 @@ cyber-learning-platform/
 - **Node.js** (v16 or higher)
 - **PostgreSQL** (local or cloud – e.g., [Supabase](https://supabase.com/), [Render PostgreSQL](https://render.com/))
 - **Telegram Bot Token** – get one from [@BotFather](https://t.me/BotFather)
-
+```
 ### 1. Clone the repository
 
 ```bash
