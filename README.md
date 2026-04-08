@@ -34,7 +34,7 @@ An educational website with cybersecurity lessons and an integrated Telegram bot
 
 ## Project Structure
 
-```
+
 cyber-learning-platform/
 ├── public/                 # Static frontend files
 │   ├── index.html          # Main website (lessons, auth, Telegram button)
@@ -48,7 +48,7 @@ cyber-learning-platform/
 ├── package.json            # Node.js dependencies
 ├── .env                    # Environment variables (see below)
 └── README.md               # This file
-```
+
 
 > **Note**: If you prefer not to use PostgreSQL, the bot can work with JSON file storage (see comments in `bot.js`).
 
